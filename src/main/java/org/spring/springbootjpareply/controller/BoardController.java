@@ -7,8 +7,10 @@ import org.spring.springbootjpareply.service.BoardService;
 import org.spring.springbootjpareply.service.ReplyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,9 +29,22 @@ public class BoardController {
     return "boardWrite";
   }
 
-  @PostMapping("/write") // DB추가
+/*  @PostMapping("/write") // DB추가
   public String writeOk(@ModelAttribute BoardDto boardDto) throws IOException {
 
+    boardService.insertBoad(boardDto);
+    // 회원가입 -> boardList이동
+    return "redirect:/board/boardList";
+  }*/
+
+  @PostMapping("/write") // DB추가
+  public String writeOk(@Valid BoardDto boardDto, BindingResult bindingResult) throws IOException {
+
+    //설정된 유효성 검사를 통과못하면
+    if(bindingResult.hasErrors()){
+      return "boardWrite";
+    }
+    
     boardService.insertBoad(boardDto);
     // 회원가입 -> boardList이동
     return "redirect:/board/boardList";

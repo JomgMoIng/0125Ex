@@ -138,13 +138,26 @@
     <!-- form -->
     <div class="write-con">
       <h2>글작성</h2>                                <!-- 파일 업로드 -->
-      <form th:action="@{/board/write}" method="POST" enctype="multipart/form-data">
+      <form th:action="@{/board/write}" method="POST" enctype="multipart/form-data" th:object="${boardDto}">
         <ul>
-          <li class="s1"><span>제목</span> <input type="text" name="title"></li>
+<!--          <li class="s1"><span>제목</span> <input type="text" name="title"></li>-->
+          <li class="s1"><span>제목</span><input type="text" th:field="*{title}"></li>
+          <li th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"> Incorrect data</li>
+
           <li><span>내용</span></li>
-          <li><textarea name="content" cols="30" rows="10"></textarea></li>
-          <li class="s1"><span>글작성자</span><input type="text" name="writer"></li>
-          <li class="s1"><span>글비빌번호</span><input type="password" name="boardPw"></li>
+          <!--          <li><textarea name="content" cols="30" rows="10"></textarea></li>-->
+          <li><textarea th:field="*{content}" cols="30" rows="10"></textarea></li>
+          <li th:if="${#fields.hasErrors('content')}" th:errors="*{content}" th:errorclass="error"> Incorrect data</li>
+
+          <!--          <li class="s1"><span>글작성자</span><input type="text" name="writer"></li>-->
+          <li class="s1"><span>글작성자</span><input type="text" th:field="*{writer}"></li>
+          <li th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}" th:errorclass="error"> Incorrect data</li>
+
+
+          <!--          <li class="s1"><span>글비빌번호</span><input type="password" name="boardPw"></li>-->
+          <li class="s1"><span>글비빌번호</span><input type="password" th:field="*{boardPw}"></li>
+          <li th:if="${#fields.hasErrors('boardPw')}" th:errors="*{boardPw}" th:errorclass="error"> Incorrect data</li>
+
           <li class="s1"><span>파일</span><input type="file" name="boardFile"></li>
 
           <li><input type="submit" value="글작성"></li>
