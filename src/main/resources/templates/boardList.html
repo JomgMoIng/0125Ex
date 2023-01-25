@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>글목록페이지</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul,
+    li {
+      list-style: none;
+    }
+
+    .boardList {
+      display: flex;
+      justify-content: center;
+    }
+
+    .boardList-con {
+      flex: 0 1 1000px;
+      border: 1px solid;
+      box-sizing: border-box;
+      padding: 20px;
+      background-color: #fffff5;
+    }
+
+    .boardList-con table {
+      width: 100%;
+      color: #222222;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid;
+      border-collapse: collapse;
+    }
+
+    table th {
+      background-color: #555555;
+      color: #ffffff;
+      padding: 5px 10px;
+      box-sizing: border-box;
+    }
+
+    table td {
+      padding: 3px 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+
+    }
+
+    h2 {
+      text-align: left;
+      padding: 30px 20px;
+      box-sizing: border-box;
+      background-color: #0091DB;
+      color: #ffffff;
+    }
+
+
+    .left-menu {
+      background-color: #ffffff;
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 5px;
+
+    }
+
+    .left-menu ul {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .left-menu ul li {
+      padding:10px 20px;
+      color: #eeeeee;
+      cursor: pointer;
+      background-color: #0091DB;
+      transition: all 0.3s;
+    }
+
+    .left-menu ul li:hover {
+
+      color: #ffffff;
+      background-color: #b3188d;
+    }
+
+    .left-menu ul li a {
+      color: inherit;
+      text-decoration: none;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left-menu" th:replace="fragments/commen :: commenFragment">
+  </div>
+  <div class="boardList">
+    <div class="boardList-con">
+      <h2>게시글목록</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>비빌번호</th>
+            <th>조회수</th>
+            <th>작성시간</th>
+            <th>상세조회</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="list: ${boardDtoList}">
+            <td th:text="${list.id}"></td>
+            <td th:text="${list.title}"></td>
+            <td th:text="${list.content}"></td>
+            <td th:text="${list.writer}"></td>
+            <td th:text="${list.boardPw}"></td>
+            <td th:text="${list.hit}"></td>
+            <td th:text="*{#temporals.format(list.createTime, 'yyyy/MM/dd/ HH:mm:ss')}"></td>
+        <!-- detail/{id}    @PathVariable-->
+        <td><a th:href="@{|/board/detail/${list.id}|}">조회</a></td>
+      </tr>
+      <tr>
+        <td colspan="8">
+          <a th:href="@{/}">HOME</a>
+          <a th:href="@{/board/write}">게시글작성</a>
+        </td>
+      </tr>
+
+
+      </tbody>
+
+
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>

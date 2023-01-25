@@ -1,0 +1,60 @@
+Entity > Dto > File 생략 > BoardEntity
+> Repository
+
+*** 외부에서 로컬의 특정 폴더에 접근하려면 권한을 설정하여야 한다
+> 별도의 권한 설정 
+
+Config
+
+
+1. form
+form > enctype="multipart/form-data"
+input type = "file"
+
+2. Dto
+// 파일 업로드 파일을 저장할 수 있는 객체
+ private MultipartFile boardFile;
+
+** 하나의 게시글 여러 파일 추가
+
+게시글 BoardEntity 1 : N 파일 FileEntity(N쪽에 외래키 설정)
+
+  // 게시글 1:N 파일 > boardEntity                cascade remove 게시글이 삭제되면 파일목록도 삭제
+  @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<FileEntity> fileEntities = new ArrayList<>();
+
+    // 파일 N : 1 게시글 > FileEntity
+    @ManyToOne(fetch = FetchType.LAZY)  // fetch = FetchType.LAZY 기본
+    @JoinColumn(name = "board_id")      // 참조하는 테이블의 기본키 또는 기본키 성질
+    private BoardEntity boardEntity;
+
+3. Controller
+
+4. Service
+> 파일이 없는 경우 > 기존 게시글 작성
+> 파일이 있는 경우 ** 필수(반복)
+ - Dto(입력받은 파일)에서 파일 가져온다 > MultipartFile
+ - originalFilename > Dto의 원래 파일을 저장
+ - newFileName > Dto의 새로운 이름의 파일을 생성
+      String newFileName = uuid + "_" + originalFilename; // 저장파일이름 (보안)
+ - 실제 저장할 경로와 이미지를 문자열로 저장
+	String filePath = "C://saveFiles/+newFileName;	// 실제 파일 저장경로 + 이름
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

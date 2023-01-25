@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>글상세페이지</title>
+  <link rel="stylesheet" th:href="@{/css/detail.css}">
+</head>
+
+<body>
+  <div class="left-menu" th:replace="fragments/commen :: commenFragment">
+  </div>
+
+  <div class="write">
+    <!-- form -->
+    <div class="write-wrap">
+      <div class="write-con">
+        <h2>글상세보기</h2>
+        <ul>
+          <li class="s1" th:if="${board.attachFile==1}">
+            <span>파일</span>
+            <span class="s2">
+              <img th:src="@{|/upload/${board.newFileName}|}" alt="">
+            </span>
+          </li>
+          <li class="s1"><span>제목</span> <span class="s2" th:text="${board.title}"></span></li>
+          <li class="s1"><span>내용</span> <span class="s2" th:text="${board.content}"></span></li>
+          <li class="s1"><span>글작성자</span><span class="s2" th:text="${board.writer}"></span></li>
+          <li class="s1"><span>글비빌번호</span><span class="s2" th:text="${board.boardPw}"></span></li>
+          <li class="s1"><a th:href="@{/board/write}">글작성</a>
+            <a th:href="@{/board/boardList}">글목록</a></li>
+        </ul>
+        </form>
+      </div>
+      <div class="reply">
+        <div class="reply-con">
+
+          <div class="reply-write">
+            <!-- 덧글 작성 -->
+            <h2>Reply Write</h2>
+            <form th:action="@{/reply/replyWrite}" method="POST">
+              <input type="hidden" readonly name="baordId" th:value="${board.id}">
+              <ul>
+                <li><textarea style="line-height:20px;padding:10px; box-sizing: border-box;" name="replyContent"
+                    id="replyContent" cols="30" rows="1" placeholder="내용작성"></textarea></li>
+                <li class="class2"><input style="line-height:20px;padding:10px; box-sizing: border-box;" type="text"
+                    name="replyWriter" id="replyWriter" placeholder="작성자">
+                  <input type="submit" value="덧글작성">
+                </li>
+              </ul>
+            </form>
+          </div>
+          <div class="reply-list">
+            <!-- 덧글리스트 -->
+            <table>
+              <tr>
+                <th>댓글번호</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>작성시간</th>
+              </tr>
+              <tr th:each="reply: ${replyDtoList}">
+                <td th:text="${reply.id}"></td>
+                <td th:text="${reply.replyWriter}"></td>
+                <td th:text="${reply.replyContent}"></td>
+                <td th:text="${reply.createTime}"></td>
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</body>
+
+</html>

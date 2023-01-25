@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>글작성페이지</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul,
+    li {
+      list-style: none;
+    }
+
+    .write {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .write-con {
+      flex: 0 1 400px;
+      box-shadow: 1px 1px 10px #555555;
+      box-sizing: border-box;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: left;
+
+      padding: 30px 20px;
+      ox-sizing: border-box;
+      background-color: #0091DB;
+      color: #ffffff;
+    }
+
+    .write-con ul {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .write-con ul li {
+      padding: 10px 10px;
+      box-sizing: border-box;
+    }
+
+    .write-con ul li.s1 {
+      display: flex;
+      justify-content: space-between;
+      gap: 2px;
+    }
+
+    .write-con ul li span {
+      flex: 1;
+      font-size: 12px;
+    }
+
+    .write-con ul li.s1 input {
+      flex: 3;
+      padding: 5px 10px;
+      box-sizing: border-box;
+      border: 1px solid #cccccc;
+    }
+
+    input[type=submit] {
+      background-color: #0000ff;
+      color: #ffffff;
+      width: 100%;
+      border: 0;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    input[type=submit]:hover {
+
+      background-color: #0091DB;
+      color: #eeeeee;
+
+    }
+
+
+    textarea {
+      width: 100%;
+      resize: none;
+    }
+
+
+
+    .left-menu {
+      background-color: #ffffff;
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 5px;
+
+    }
+
+    .left-menu ul {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .left-menu ul li {
+      padding:10px 20px;
+      color: #eeeeee;
+      cursor: pointer;
+      background-color: #0091DB;
+      transition: all 0.3s;
+    }
+
+    .left-menu ul li:hover {
+
+      color: #ffffff;
+      background-color: #b3188d;
+    }
+
+    .left-menu ul li a {
+      color: inherit;
+      text-decoration: none;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left-menu" th:replace="fragments/commen :: commenFragment">
+  </div>
+  <div class="write">
+    <!-- form -->
+    <div class="write-con">
+      <h2>글작성</h2>                                <!-- 파일 업로드 -->
+      <form th:action="@{/board/write}" method="POST" enctype="multipart/form-data">
+        <ul>
+          <li class="s1"><span>제목</span> <input type="text" name="title"></li>
+          <li><span>내용</span></li>
+          <li><textarea name="content" cols="30" rows="10"></textarea></li>
+          <li class="s1"><span>글작성자</span><input type="text" name="writer"></li>
+          <li class="s1"><span>글비빌번호</span><input type="password" name="boardPw"></li>
+          <li class="s1"><span>파일</span><input type="file" name="boardFile"></li>
+
+          <li><input type="submit" value="글작성"></li>
+        </ul>
+      </form>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
