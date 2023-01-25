@@ -10,6 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -20,11 +23,18 @@ import java.time.LocalDateTime;
 public class BoardDto {
 
   public Long id;  //글번호
-
+    
+  //공란이면 > 에러메시지 출력
+  @NotEmpty(message = "공란입니다. 제목을 입력하세요")
+  @NotBlank(message = "Null입니다!")
+  @NonNull  // 공백과 Null 허용하지 않는다
   private String title;//글제목
 
+  @NotEmpty(message = "공란입니다. 제목을 입력하세요")
+  @Size(min = 5, max = 250) //5글자 이상~ 250글자 미만
   private String content;//글내용
 
+  @NotEmpty(message = "공란입니다. 제목을 입력하세요")
   private String writer;//글작성자
 
   private int hit; // 조회수

@@ -21,7 +21,9 @@ public class BoardController {
   private  final ReplyService replyService;
 
   @GetMapping("/write")  //보이기, DB데이터를 get
-  public String write(){
+  public String write(Model model){
+    // 글작성 페이지 > BoardDto 객체를 >
+    model.addAttribute("boardDto",new BoardDto());
     return "boardWrite";
   }
 
